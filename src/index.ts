@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { init } from "./initialize.js";
+import { init } from "./svelte-cli.js";
 
 const args = process.argv.slice(2);
 
