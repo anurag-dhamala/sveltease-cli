@@ -1,0 +1,48 @@
+{
+  "name": "sveltease-cli",
+  "version": "1.0.0",
+  "description": "Seamlessly integrate svelte with frontend projects created with vite",
+  "type": "module",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anurag-dhamala/sveltease-cli.git"
+  },
+  "homepage": "https://github.com/anurag-dhamala/sveltease-cli#readme",
+  "readme": "https://github.com/anurag-dhamala/sveltease-cli#readme",
+  "bugs": {
+    "url": "https://github.com/anurag-dhamala/sveltease-cli/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node index.ts"
+  },
+  "keywords": [
+    "vite",
+    "svelte",
+    "react",
+    "vue",
+    "integration"
+  ],
+  "author": "Anurag Dhamala <anuragdhamala04@gmail.com> (https://anurag-dhamala.github.io)",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "figlet": "^1.7.0",
+    "inquirer": "^9.2.12",
+    "shelljs": "^0.8.5",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.5.8",
+    "typescript": "^5.2.2"
+  }
+}
