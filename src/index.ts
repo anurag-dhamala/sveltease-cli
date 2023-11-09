@@ -1,19 +1,11 @@
 import chalk from "chalk";
-import figlet from "figlet";
+import { init } from "./initialize.js";
 
+const args = process.argv.slice(2);
 
-const INTRO_TEXT = "Welcome to svelte-cli"
-
-const welcomeFiglet = figlet.textSync(INTRO_TEXT, {
-    horizontalLayout: "default",
-    verticalLayout: "default",
-    width: 100
-
-})
-
-const init = async () => {
-    const chalkObj = chalk.green(welcomeFiglet)
-    console.log(chalkObj)
+if(!(args.length === 1)) {
+    console.log(chalk.red("Invalid no. of arguments"));
+    process.exit(-1);
 }
 
 init();
