@@ -11,7 +11,11 @@ export const getDirName=()=>{
 export const checkIfFileExists=async(filepath: string)=> {
     return new Promise((resolve, reject) => {
         fs.access(filepath, fs.constants.F_OK, error => {
-          resolve(!error);
+          if(!error) {
+            resolve(true);
+          } else {
+            resolve(false)
+          }
         });
       });
 }

@@ -1,6 +1,6 @@
 import figlet from "figlet";
 
-const INTRO_TEXT = "svelte-cli"
+const INTRO_TEXT = "sveltease-cli"
 
 export const FIGLET_WELCOME_MSG = figlet.textSync(INTRO_TEXT, {
     font: "ANSI Shadow",
