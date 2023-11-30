@@ -22,6 +22,28 @@ export const checkIfProjectDir=()=>{
   return files.includes('package.json');
 }
 
+const getSuccessMessage=(includeBackupMessage: boolean = false)=> {
+
+    console.log(
+        chalk.greenBright(
+            "Project successfully configured."
+        )
+    );
+
+    if(includeBackupMessage) {
+        console.log(
+            chalk.greenBright(
+                "IMPORTANT: I have created .backup files for your previous configs and added my own."
+            ),
+            "\n",
+            chalk.greenBright(
+                "Please remove it if it is unnecessary or copy your custom config to my creation."
+            )
+        );
+    }
+
+}
+
 const initiateViteSetup=()=>{
     pkgInstaller("@sveltejs/vite-plugin-svelte", "dev").then(()=> {
         console.log(
@@ -50,10 +72,12 @@ const initiateViteSetup=()=>{
 
         if(configContent.includes("react")) {
             writeFile(filePath, defaultReactViteConfig);
+            getSuccessMessage(true);
             return;
         }
         if(configContent.includes("vue")) {
             writeFile(filePath, defaultVueViteConfig);
+            getSuccessMessage(true);
             return;
         }
         console.log(
@@ -84,6 +108,7 @@ const initiateNextFileSetup=()=>{
         const filePath = `${getDirName()}/${nextConfigFile}`;
         copyFile(filePath, `${filePath}.backup`)
         writeFile(filePath, nextConfigJs);
+        getSuccessMessage(true);
     }).catch(err=>{
         console.log(
             chalk.redBright("Something went wrong. Check the error below: \n"),
@@ -95,11 +120,11 @@ const initiateNextFileSetup=()=>{
 
 const initiateCraReactSetup=()=> {
     pkgInstaller("react-app-rewired", "dev").then(async ()=> {
+        const filePath = `${getDirName()}/config-overrides.js`;
+        await pkgInstaller("svelte-loader", "dev");
         console.log(
             chalk.green("Additional packages installation completed! Configuring...")
         );
-        const filePath = `${getDirName()}/config-overrides.js`;
-        await pkgInstaller("svelte-loader", "dev");
         writeFile(filePath, craReactConfigJS);
         const pkgContent = fs.readFileSync(`${getDirName()}/package.json`, 'utf-8');
         let obj = JSON.parse(pkgContent);
@@ -118,6 +143,7 @@ const initiateCraReactSetup=()=> {
             )
         )
         writeFile(`${getDirName()}/package.json`, JSON.stringify(obj));
+        getSuccessMessage(true);
     }).catch(err=>{
         console.log(
             chalk.redBright("Something went wrong. Check the error below: \n"),
