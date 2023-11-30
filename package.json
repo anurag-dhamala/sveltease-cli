@@ -1,6 +1,6 @@
 {
   "name": "sveltease-cli",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "CLI tool to work easily with sveltease",
   "type": "module",
   "main": "dist/index.js",
