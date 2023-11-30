@@ -8,32 +8,32 @@ import Store from "./Store.js";
 
 
 if(!checkIfProjectDir()) {
-    console.log(chalk.red("Current directory doesn't contain package.json. Exiting..."))
+    console.log(chalk.redBright("Current directory doesn't contain package.json. Exiting."))
     process.exit(1);
 }
 
 const args = process.argv.slice(2);
 if(args.length !==2) {
-    console.log(chalk.red("Invalid no. of arguments."));
+    console.log(chalk.redBright("Invalid no. of arguments."));
     process.exit(1);
 }
 
 if(args[0] !=="init") {
     console.log(
-        chalk.red("Invalid command."),
+        chalk.redBright("Invalid command."),
         "\n",
-        chalk.greenBright("Try npx sveltease-cli init vite|next|webpack"),
+        chalk.greenBright("Try npx sveltease-cli init [vite|next|webpack]"),
         "\n",
-        chalk.red("Exiting...")
+        chalk.redBright("Exiting.")
     );
     process.exit(1);
 }
 
 if(!availableInitOptions.includes(args[1])) {
     console.log(
-        chalk.red("Invalid command.\n"),
+        chalk.redBright("Invalid command.\n"),
         chalk.greenBright("Try npx sveltease-cli init vue | react-vite | react-cra | next\n"),
-        chalk.red("Exiting...")
+        chalk.redBright("Exiting.")
     );
     process.exit(1);
 }

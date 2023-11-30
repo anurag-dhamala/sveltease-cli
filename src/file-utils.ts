@@ -30,7 +30,7 @@ const initiateViteSetup=()=>{
         const viteConfigFile = Store.hasTypeScriptEnabled ? 'vite.config.ts': 'vite.config.js';
         if(!Store.files.includes(viteConfigFile)) {
             console.log(
-                chalk.red("Using vite but no vite.config.ts? I am confused.")
+                chalk.redBright("Using vite but no vite.config.ts? I am confused.")
             );
             process.exit(1);
         }
@@ -43,7 +43,7 @@ const initiateViteSetup=()=>{
         }
         if(!configContent.includes("react") && !configContent.includes("vue")) {
             console.log(
-                chalk.red("I am just v1 years old. I can only configure vue and react projects and looks like you are not using either of them.")
+                chalk.redBright("I am just v1 years old. I can only configure vue and react projects and looks like you are not using either of them.")
             );
             process.exit(1);
         }
@@ -57,13 +57,13 @@ const initiateViteSetup=()=>{
             return;
         }
         console.log(
-            chalk.red("I probably messed up as I am just v1 years old. Please try again or try manual configuration. Checkout readme.")
+            chalk.redBright("I probably messed up as I am just v1 years old. Please try again or try manual configuration. Checkout readme.")
         )
         process.exit(1);
     }).catch(err=>{
         console.log(
-            chalk.red("Something went wrong. Check the error below: \n"),
-            chalk.red(err)
+            chalk.redBright("Something went wrong. Check the error below: \n"),
+            chalk.redBright(err)
         )
         process.exit(1);
     })
@@ -77,7 +77,7 @@ const initiateNextFileSetup=()=>{
         const nextConfigFile = 'next.config.js';
         if(!Store.files.includes(nextConfigFile)) {
             console.log(
-                chalk.red("Using vite but no vite.config.ts? I am confused.")
+                chalk.redBright("Using vite but no vite.config.ts? I am confused.")
             );
             process.exit(1);
         }
@@ -86,8 +86,8 @@ const initiateNextFileSetup=()=>{
         writeFile(filePath, nextConfigJs);
     }).catch(err=>{
         console.log(
-            chalk.red("Something went wrong. Check the error below: \n"),
-            chalk.red(err)
+            chalk.redBright("Something went wrong. Check the error below: \n"),
+            chalk.redBright(err)
         )
         process.exit(1);
     })
@@ -120,8 +120,8 @@ const initiateCraReactSetup=()=> {
         writeFile(`${getDirName()}/package.json`, JSON.stringify(obj));
     }).catch(err=>{
         console.log(
-            chalk.red("Something went wrong. Check the error below: \n"),
-            chalk.red(err)
+            chalk.redBright("Something went wrong. Check the error below: \n"),
+            chalk.redBright(err)
         )
         process.exit(1);
     })
@@ -133,7 +133,7 @@ const copyFile=(src: string, destination: string)=>{
         fs.copyFileSync(src, destination);
     } catch (e) {
         console.log(
-            chalk.red("Cannot copy the existing config in backup file. I cannot proceed ahead with such risks. Exiting...")
+            chalk.redBright("Cannot copy the existing config in backup file. I cannot proceed ahead with such risks. Exiting...")
         )
         process.exit(1);
     }
@@ -144,7 +144,7 @@ const writeFile=(filePath: string, content: string)=>{
         fs.writeFileSync(filePath, content);
     } catch (e) {
         console.log(
-            chalk.red("Cannot write to the config file. Looks like you need to manually edit the config. I am extremely sorry. Exiting...")
+            chalk.redBright("Cannot write to the config file. Looks like you need to manually edit the config. I am extremely sorry. Exiting...")
         )
         process.exit(1);
     }
@@ -164,7 +164,7 @@ export const igniteFileGenerator=()=>{
             break;
         default:
             console.log(
-                chalk.red(
+                chalk.redBright(
                     "Looks like you didn't provide valid init options. Choose one of them: \n",
                 ),
                 chalk.yellowBright("vue, react-vite, react-cra, next")
@@ -183,7 +183,7 @@ const installationCmd=(pkg: string, mode: 'dev' | 'normal')=> {
 
 export const pkgInstaller= (pkg: string, mode: "dev" | "normal" = "normal")=> {
     return new Promise<void>((resolve, reject) => {
-        console.log(chalk.green(`Installing ${pkg}...`))
+        console.log(chalk.greenBright(`Installing ${pkg}...`))
         exec(installationCmd(pkg, mode), (error: any, stdout: any, stderr: any) => {
             if(error) {
                 reject(error);
