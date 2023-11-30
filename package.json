@@ -1,7 +1,7 @@
 {
   "name": "sveltease-cli",
-  "version": "1.0.0",
-  "description": "Seamlessly integrate svelte with frontend projects created with vite",
+  "version": "1.0.1",
+  "description": "CLI tool to work easily with sveltease",
   "type": "module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -9,6 +9,9 @@
     "dist",
     "src"
   ],
+  "bin": {
+    "sveltease-cli": "index.js"
+  },
   "engines": {
     "node": ">=10"
   },
