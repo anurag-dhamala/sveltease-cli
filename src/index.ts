@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+
+
 import chalk from "chalk";
 import { initSvelteaseSetup } from "./svelte-cli.js";
 import { checkIfProjectDir } from "./file-utils.js";
