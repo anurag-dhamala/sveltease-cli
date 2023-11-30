@@ -20,7 +20,7 @@ export const initSvelteaseSetup = async () => {
     const answers = await collectQuestions();
     Store.pkgManager = answers.pkgManager;
     Store.hasTypeScriptEnabled = answers.hasTypeScriptEnabled;
-    Store.isTailwindCssUsedInSvelte = answers.isTailwindCssUsedInSvelte;
+    // Store.isTailwindCssUsedInSvelte = answers.isTailwindCssUsedInSvelte;
     console.log(chalk.greenBright("Please wait while we are setting you up...."))
     pkgInstaller("sveltease").then(()=> {
         igniteFileGenerator();

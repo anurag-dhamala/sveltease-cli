@@ -21,13 +21,13 @@ export const questions = [
         type: "confirm",
         message:"Are you using typescript? (default=Y)",
         default: true
-    }, 
-    {
-        name: "isTailwindCssUsedInSvelte",
-        type: "confirm",
-        message: "Do the svelte components that you want to use have tailwind css? (default=Y)",
-        default: false
-    },
+    }
+    // {
+    //     name: "isTailwindCssUsedInSvelte",
+    //     type: "confirm",
+    //     message: "Do the svelte components that you want to use have tailwind css? (default=Y)",
+    //     default: false
+    // },
 ]
 
 export const availableInitOptions = ['vue', 'react-vite', 'react-cra', 'next']
