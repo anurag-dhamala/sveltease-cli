@@ -154,6 +154,22 @@ const initiateCraReactSetup=()=> {
 }
 
 
+const initiateWebpackSetup= async ()=> {
+    console.log(
+        chalk.greenBright("Installing webpack-merge...")
+    )
+    await pkgInstaller("webpack-merge", "dev");
+    console.log(
+        chalk.greenBright("Installing svelte-loader...")
+    );
+    await pkgInstaller("svelte-loader", "dev");
+    console.log(
+        "\n",
+        chalk.greenBright("Additional packages installation completed! Configuring...")
+    );
+
+}
+
 const copyFile=(src: string, destination: string)=>{
     try {
         fs.copyFileSync(src, destination);
@@ -187,6 +203,10 @@ export const igniteFileGenerator=()=>{
             break;
         case "react-cra":
             initiateCraReactSetup();
+            break;
+
+        case 'webpack':
+            initiateWebpackSetup();
             break;
         default:
             console.log(

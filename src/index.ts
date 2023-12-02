@@ -41,6 +41,16 @@ if(!availableInitOptions.includes(args[1])) {
     process.exit(1);
 }
 
-Store.initOptions = args[1] as 'vue' | 'react-cra' | 'react-vite' | 'next';
+if(args[1] === "webpack" && !args[2]) {
+    console.log(
+        chalk.redBright("You must provide your webpack config file name along with webpack.\n"),
+        chalk.greenBright("Try npx sveltease-cli init webpack webpack.config.js\n"),
+        chalk.redBright("Exiting.")
+    );
+    process.exit(1);
+}
+
+Store.webpackFileName = args[2];
+Store.initOptions = args[1] as 'vue' | 'react-cra' | 'react-vite' | 'next' | 'webpack';
 
 initSvelteaseSetup();
