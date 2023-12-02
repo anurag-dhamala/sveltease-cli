@@ -7,6 +7,8 @@ import {
     craReactConfigJS,
     defaultReactViteConfig,
     defaultVueViteConfig,
+    getWebpackConfigContentCJS,
+    getWebpackConfigContentESM,
     nextConfigJs,
     svelteConfigJs
 } from "./constants.js";
@@ -155,19 +157,26 @@ const initiateCraReactSetup=()=> {
 
 
 const initiateWebpackSetup= async ()=> {
-    console.log(
-        chalk.greenBright("Installing webpack-merge...")
-    )
     await pkgInstaller("webpack-merge", "dev");
-    console.log(
-        chalk.greenBright("Installing svelte-loader...")
-    );
     await pkgInstaller("svelte-loader", "dev");
     console.log(
         "\n",
         chalk.greenBright("Additional packages installation completed! Configuring...")
     );
-
+    if(Store.webpackWithCommonJs) {
+        writeFile(`${getDirName()}/webpack.main.config.js`, getWebpackConfigContentCJS(Store.webpackFileName));
+    } else {
+        writeFile(`${getDirName()}/webpack.main.config.js`, getWebpackConfigContentESM(Store.webpackFileName))
+    }
+    getSuccessMessage(false);
+    console.log(
+        chalk.yellowBright("\nI have created webpack.main.config.js which has merged your original webpack config with svelte loader plugin. Please change your webpack run script with my file to work with svelte.")
+    );
+    console.log(
+        chalk.bgYellowBright(
+            "webpack --config webpack.main.config.js"
+        )
+    );
 }
 
 const copyFile=(src: string, destination: string)=>{
@@ -192,7 +201,7 @@ const writeFile=(filePath: string, content: string)=>{
     }
 }
 
-export const igniteFileGenerator=()=>{
+export const igniteFileGenerator= async ()=>{
     switch (Store.initOptions){
         case "vue":
         case "react-vite":
@@ -206,7 +215,7 @@ export const igniteFileGenerator=()=>{
             break;
 
         case 'webpack':
-            initiateWebpackSetup();
+           await initiateWebpackSetup();
             break;
         default:
             console.log(
@@ -229,7 +238,7 @@ const installationCmd=(pkg: string, mode: 'dev' | 'normal')=> {
 
 export const pkgInstaller= (pkg: string, mode: "dev" | "normal" = "normal")=> {
     return new Promise<void>((resolve, reject) => {
-        console.log(chalk.greenBright(`Installing ${pkg}...`))
+        console.log(chalk.greenBright(`\nInstalling ${pkg}...`))
         exec(installationCmd(pkg, mode), (error: any, stdout: any, stderr: any) => {
             if(error) {
                 reject(error);
