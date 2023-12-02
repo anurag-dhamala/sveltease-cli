@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { FIGLET_WELCOME_MSG, questions } from "./constants.js";
+import {FIGLET_WELCOME_MSG, getQuestions} from "./constants.js";
 import inquirer from "inquirer"
 import Store from "./Store.js";
 import {igniteFileGenerator, pkgInstaller} from "./file-utils.js";
@@ -11,7 +11,7 @@ const showWelcomeMessage=()=> {
 }
 
 const collectQuestions =  ()=> {
-    return inquirer.prompt(questions);
+    return inquirer.prompt(getQuestions());
 }
 
 export const initSvelteaseSetup = async () => {
@@ -20,6 +20,7 @@ export const initSvelteaseSetup = async () => {
     const answers = await collectQuestions();
     Store.pkgManager = answers.pkgManager;
     Store.hasTypeScriptEnabled = answers.hasTypeScriptEnabled;
+    Store.webpackWithCommonJs = answers.webpackWithCommonJs;
     // Store.isTailwindCssUsedInSvelte = answers.isTailwindCssUsedInSvelte;
     console.log(chalk.greenBright("Please wait while we are setting you up...."))
     pkgInstaller("sveltease").then(()=> {
