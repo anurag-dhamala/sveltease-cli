@@ -1,4 +1,5 @@
 import figlet from "figlet";
+import Store from "./Store.js";
 
 const INTRO_TEXT = "sveltease"
 
@@ -9,28 +10,33 @@ export const FIGLET_WELCOME_MSG = figlet.textSync(INTRO_TEXT, {
     width: 100
 })
 
-export const questions = [
-    {
-        name: "pkgManager",
-        type: "string",
-        message: "Which package manager are you using? [npm (default) | pnpm | yarn]",
-        default: "npm"
-    },
-    {
-        name: "hasTypeScriptEnabled",
-        type: "confirm",
-        message:"Are you using typescript? (default=Y)",
-        default: true
+export const getQuestions=()=> {
+    let defaultQns =  [
+        {
+            name: "pkgManager",
+            type: "string",
+            message: "Which package manager are you using? [npm (default) | pnpm | yarn]",
+            default: "npm"
+        },
+        {
+            name: "hasTypeScriptEnabled",
+            type: "confirm",
+            message:"Are you using typescript? (default=Y)",
+            default: true
+        }
+    ]
+    if(Store.initOptions === 'webpack') {
+       defaultQns = [...defaultQns, {
+           name: "webpackWithCommonJs",
+           default: false,
+           message: "Are you using common js for webpack configuration? (default=N)",
+           type: "confirm"
+       }]
     }
-    // {
-    //     name: "isTailwindCssUsedInSvelte",
-    //     type: "confirm",
-    //     message: "Do the svelte components that you want to use have tailwind css? (default=Y)",
-    //     default: false
-    // },
-]
+    return defaultQns;
+}
 
-export const availableInitOptions = ['vue', 'react-vite', 'react-cra', 'next']
+export const availableInitOptions = ['vue', 'react-vite', 'react-cra', 'next', 'webpack']
 
 export const defaultReactViteConfig = `
 import { defineConfig } from 'vite';
@@ -109,3 +115,51 @@ module.exports = function override(config, env) {
     return config
 }
 `
+
+export const getWebpackConfigContentCJS=(fileName: string)=> {
+    return `
+const {merge} = require('webpack-merge');
+const baseConfig = require('${fileName}');
+module.exports = merge(baseConfig, {
+    module: {
+    rules: [
+       {
+            test: /\\.(html|svelte)$/,
+            use: 'svelte-loader',
+        },
+        {
+            // required to prevent errors from Svelte on Webpack 5+, omit on Webpack 4
+            test: /node_modules\\/svelte\\/.*\\.mjs$/,
+            resolve: {
+              fullySpecified: false
+            }
+        }
+    ]
+}
+});
+`
+}
+
+export const getWebpackConfigContentESM=(fileName: string)=> {
+    return `
+import {merge} from 'webpack-merge';
+import baseConfig from '${fileName}';
+export default merge(baseConfig, {
+    module: {
+    rules: [
+       {
+            test: /\\.(html|svelte)$/,
+            use: 'svelte-loader',
+        },
+        {
+            // required to prevent errors from Svelte on Webpack 5+, omit on Webpack 4
+            test: /node_modules\\/svelte\\/.*\\.mjs$/,
+            resolve: {
+              fullySpecified: false
+            }
+        }
+    ]
+}
+});    
+`
+}
